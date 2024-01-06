@@ -1,3 +1,5 @@
+use std::fmt;
+
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Rank {
     King,
@@ -79,5 +81,36 @@ pub struct Card {
 impl Card {
     pub fn new(rank: Rank, suite: Suite) -> Self {
         Card { rank, suite }
+    }
+}
+
+impl fmt::Display for Card {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let rank = match self.rank {
+            Rank::King => "K",
+            Rank::Queen => "Q",
+            Rank::Jack => "J",
+            Rank::Ten => "10",
+            Rank::Nine => "9",
+            Rank::Eight => "8",
+            Rank::Seven => "7",
+            Rank::Six => "6",
+            Rank::Five => "5",
+            Rank::Four => "4",
+            Rank::Three => "3",
+            Rank::Two => "2",
+            Rank::Ace => "A",
+            Rank::Joker => "Joker",
+        };
+
+        let suite = match self.suite {
+            Suite::Heart => "♥️",
+            Suite::Diamond => "♦️",
+            Suite::Club => "♣️",
+            Suite::Spade => "♠️",
+            Suite::None => "",
+        };
+
+        write!(f, "{}{}", rank, suite)
     }
 }
